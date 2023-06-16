@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./styles/global.css" />
+    <link href="//db.onlinewebfonts.com/c/d2d21cf0ee4c1d969d8a4dccc587ab26?family=Flexo+Medium" rel="stylesheet"
+        type="text/css" />
+    <title>Pokedexia</title>
+</head>
+
+<body>
+    <header>
+        <h1>POKEDEXIA</h1>
+    </header>
+    <main class="container">
+
+        <!-- Container of the create pokemon form -->
+        <div class="form-container">
+            <form>
+                <h3>Création d'un pokemon</h3>
+                <!--<label for="image">Envoyer l'image du Pokemon</label>
+                <input type="file" name="image" />-->
+                <input id="pokemonName" type="text" name="name" placeholder="Entrez le nom du pokemon">
+                <p>Selectionner les types depuis la liste pour Ajouter des types (vous pouvez selectionner plusieurs):
+                </p>
+                <input type="text" id="types" name="types" readonly />
+                <select id="type-select">
+                    <% types.forEach(function(type) { %>
+                        <option value="<%= type.name %>">
+                            <%= type.name %>
+                        </option>
+                        <% }); %>
+                </select>
+
+                <p>Selectionner les abilities depuis la liste pour Ajouter des abilities (vous pouvez selectionner
+                    plusieurs): </p>
+                <input type="text" id="abilities" name="abilities" readonly />
+                <select id="ability-select">
+                    <% abilities.forEach(function(ability) { %>
+                        <option value="<%= ability.name %>">
+                            <%= ability.name %>
+                        </option>
+                        <% }); %>
+                </select>
+                <button id="addPokemonButton">Ajouter le pokemon</button>
+            </form>
+        </div>
+        <!-- Container of the create pokemon form -->
+
+        <!--<div class="search-bar">
+            <input id="searchBar" type="text" placeholder="Cherchez un pokemon par nom" />
+            <button id="searchButton">Rechercher</button>
+        </div>-->
+        
+        <!-- Grid layout that contains all the pokemon cards -->
+        <div class="grid-layout">
+            <!-- Displaying all the pokemon cards thanks to the pokemons array-->
+            <% pokemons.forEach(function(pokemon) { %>
+                <div class="card">
+                    <img src="./images/<%= pokemon.imageFile %>"" alt=" image de pokemon" />
+                    <div class="delete-form">
+                        <input type="text" value="#<%= pokemon.id %>" hidden>
+                        <button class="delete-button" value="<%= pokemon.id %>">Supprimer</button>
+                    </div>
+                    <form class="modify-form">
+                        <p>#<%= pokemon.id %>
+                        </p>
+                        <input type="text" id="pokemonName-<%= pokemon.id %>" placeholder="<%= pokemon.name %> (clickez pour modifier)">
+                        <div class="types labels-container">
+                            <% pokemon.types.forEach(function(type) { %>
+                                <p>
+                                    <%= type %>
+                                </p>
+                                <% }); %>
+                        </div>
+                        <div class="abilities labels-container">
+                            <% pokemon.abilities.forEach(function(ability) { %>
+                                <p>
+                                    <%= ability %>
+                                </p>
+                                <% }); %>
+                        </div>
+                        <p>Selectionner les types depuis la liste pour Ajouter des types (vous pouvez selectionner
+                            plusieurs): </p>
+                        <input type="text" id="types-<%= pokemon.id %>" name="types" readonly />
+                        <select id="type-select-<%= pokemon.id %>">
+                            <% types.forEach(function(type) { %>
+                                <option value="<%= type.name %>">
+                                    <%= type.name %>
+                                </option>
+                                <% }); %>
+                        </select>
+
+                        <p>Selectionner les abilities depuis la liste pour Ajouter des abilities (vous pouvez
+                            selectionner plusieurs): </p>
+                        <input type="text" id="abilities-<%= pokemon.id %>" name="abilities" readonly />
+                        <select id="ability-select-<%= pokemon.id %>">
+                            <% abilities.forEach(function(ability) { %>
+                                <option value="<%= ability.name %>">
+                                    <%= ability.name %>
+                                </option>
+                                <% }); %>
+                        </select>
+                        <button num="<%= pokemon.id %>" id="edit-button-<%= pokemon.id %>" class="edit-button">Modifier</button>
+                    </form>
+                </div>
+                <% }); %>
+        </div>
+        <!-- Grid layout that contains all the pokemon cards -->
+
+    </main>
+    <script type="text/javascript">
+        // Display the types selected from the select element in a text line.
+        let typeSelect = document.getElementById("type-select");
+        let typesDisplay = document.getElementById("types");
+        typeSelect.addEventListener('change', (event) => {
+            if (!typesDisplay.value.includes(event.target.value)) {
+                typesDisplay.value += `${event.target.value}, `;
+            }
+        });
+        // Display the abilites selected from the select element in a text line.
+        let abilitySelect = document.getElementById("ability-select");
+        let abilitiesDisplay = document.getElementById("abilities");
+        abilitySelect.addEventListener('change', (event) => {
+            if (!abilitiesDisplay.value.includes(event.target.value)) {
+                abilitiesDisplay.value += `${event.target.value}, `;
+            }
+        });
+
+        // for each card adds event listener for click on the modify button.
+        let pokemonCards = document.getElementsByClassName("card");
+        let index = 1;
+        Array.from(pokemonCards).forEach((card) => {
+            // Adds an event listener that adds the type on the input next to it at each new select.
+            let currentTypeSelect = document.getElementById(`type-select-${index}`);
+            let currentTypes = document.getElementById(`types-${index}`);
+            currentTypeSelect.addEventListener('change', (event) => {
+                if(!currentTypes.value.includes(event.target.value)) {
+                    currentTypes.value += `${event.target.value}, `;
+                }
+            });
+            // Adds an event listener that adds the ability on the abilities input next to it at each new
+            // ability select
+            let currentAbilitiesSelect = document.getElementById(`ability-select-${index}`);
+            let currentAbilities = document.getElementById(`abilities-${index}`);
+            currentAbilitiesSelect.addEventListener(('change'), (event) => {
+                if(!currentAbilities.value.includes(event.target.value)) {
+                    currentAbilities.value += `${event.target.value}, `;
+                }
+            });
+            // On click on the modify button collects all the edited data from the pokemon card
+            // and proceeds by sending a patch HTTP request to the server with the new pokemon's
+            // edited data.
+            let modifyButton = document.getElementById(`edit-button-${index}`);
+            modifyButton.addEventListener('click', (event) => {
+                let myHeaders = new Headers();
+                let buttonIndex = modifyButton.getAttribute("num");
+                myHeaders.append('Content-Type', 'application/json');
+                let payload = {
+                    id: buttonIndex,
+                    name: document.getElementById(`pokemonName-${buttonIndex}`).value,
+                    types: document.getElementById(`types-${buttonIndex}`).value,
+                    abilities: document.getElementById(`abilities-${buttonIndex}`).value
+                };
+                let myBody = JSON.stringify(payload);
+                let myInit = {
+                    method: 'PATCH',
+                    headers: myHeaders,
+                    mode: 'cors',
+                    cache: 'default',
+                    body: myBody
+                };
+                let myURL = `http://localhost:3000/`;
+                //launch the request
+                fetch(myURL, myInit)
+                    .then((httpResponse) => {
+                        return httpResponse.text();
+                    })
+                    .then((responseBody) => {
+                        console.log(`response is ${responseBody}`);
+                        location.reload();
+                    })
+                    .catch((err) => {
+                        console.log(`ERROR : ${err}`);
+                    })
+            });
+            index++;
+        });
+
+        // Adds a Pokemon with the data from the form by sending a post HTTP request
+        // reloads the page with the new pokemons
+        let addPokemonButton = document.getElementById("addPokemonButton");
+        addPokemonButton.addEventListener('click', (event) => {
+            let myHeaders = new Headers();
+            myHeaders.append('Content-Type', 'application/json');
+            let payload = {
+                id: 0,
+                name: document.getElementById("pokemonName").value,
+                types: document.getElementById("types").value,
+                abilities: document.getElementById("abilities").value
+            };
+            let myBody = JSON.stringify(payload);
+            let myInit = {
+                method: 'POST',
+                headers: myHeaders,
+                mode: 'cors',
+                cache: 'default',
+                body: myBody
+            };
+            let myURL = `http://localhost:3000/`;
+            //launch the request
+            fetch(myURL, myInit)
+                .then((httpResponse) => {
+                    return httpResponse.text();
+                })
+                .then((responseBody) => {
+                    console.log(`response is ${responseBody}`);
+                    location.reload();
+                })
+                .catch((err) => {
+                    console.log(`ERROR : ${err}`);
+                })
+        })
+
+        // Deletes a pokemon by sending a DELETE HTTP request with the pokemon's id
+        // reloads the page after that to get the updated list of pokemons.
+        let removeButtons = document.getElementsByClassName("delete-button");
+        Array.from(removeButtons).forEach(button => {
+            button.addEventListener('click', (event) => {
+                let myHeaders = new Headers();
+                myHeaders.append('Content-Type', 'application/json');
+                let payload = {
+                    id: event.target.value
+                };
+                let myBody = JSON.stringify(payload);
+                let myInit = {
+                    method: 'DELETE',
+                    headers: myHeaders,
+                    mode: 'cors',
+                    cache: 'default',
+                    body: myBody
+                };
+                let myURL = `http://localhost:3000/${event.target.value}`;
+
+                //launch the request
+                fetch(myURL, myInit)
+                    .then((httpResponse) => {
+                        return httpResponse.text();
+                    })
+                    .then((responseBody) => {
+                        console.log(`response is ${responseBody}`);
+                        location.reload();
+                    })
+                    .catch((err) => {
+                        console.log(`ERROR : ${err}`);
+                    })
+            })
+        });
+    </script>
+</body>
+
+</html>

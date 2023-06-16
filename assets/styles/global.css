@@ -1,0 +1,136 @@
+@import url(//db.onlinewebfonts.com/c/d2d21cf0ee4c1d969d8a4dccc587ab26?family=Flexo+Medium);
+
+* {
+    font-family: "Flexo Medium";
+}
+
+header {
+    text-align: center;
+}
+
+.container {
+    margin: auto;
+    width: 80vw;
+    min-height: 100px;
+}
+
+.grid-layout {
+    display: grid;
+    gap: 3vw 2vh;
+    grid-template-columns: auto auto auto;
+    justify-items: center;
+    padding: 10px;
+
+}
+
+.container .search-bar {
+    text-align: center;
+}
+
+.container .form-container form {
+    border: 2px solid black;
+    border-radius: 20px;
+    padding: 20px;
+}
+
+.container .search-bar input {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    width: 70%;
+    border-top: 0px;
+    border-left: 0px;
+    border-right: 0px;
+    margin-bottom: 5px;
+    color: black;
+    font-size: 16px;
+}
+
+.container .search-bar input::placeholder {
+    color: black;
+}
+
+
+.container .grid-layout .card {
+    min-height: 200px;
+    min-width: 120px;
+    border: 2px solid black;
+    border-radius: 15px;
+    padding: 10px;
+    box-shadow: 0px 10px 10px lightblue, 3px 10px 10px lightblue, -3px 10px 10px lightblue;
+}
+
+.container .grid-layout .card img {
+    max-width: 22vw;
+}
+
+.container .grid-layout .card .labels-container {
+    display: flex;
+}
+
+.container .grid-layout .card .labels-container p {
+    border-radius: 5px;
+    border: 1px solid black;
+    background-color: blueviolet;
+    padding: 3px 20px;
+    margin-right: 5px;
+}
+
+.container .grid-layout .card form .edit-button {
+    background-color: seagreen;
+    border-radius: 5px;
+    padding: 3px 20px;
+    border: 1px solid seagreen;
+}
+
+.container .grid-layout .card form button:hover {
+    cursor: grab;
+}
+
+.container .grid-layout .card .delete-form .delete-button {
+    background-color: red;
+    border-radius: 5px;
+    padding: 3px 20px;
+    border: 1px solid red;
+    width: 100%;
+}
+
+.container .grid-layout .card .modify-form {
+    padding: 10px;
+    display: flex;
+    flex-flow: column;
+}
+
+.container .grid-layout .card .modify-form input {
+    border-top: 0px;
+    border-left: 0px;
+    border-right: 0px;
+    margin-bottom: 5px;
+    color: black;
+    font-size: 16px;
+}
+
+.container .grid-layout .card .modify-form textarea {
+    margin-bottom: 5px;
+    border-top: 0px;
+    border-left: 0px;
+    border-right: 0px;
+    color: black;
+    font-size: 16px;
+}
+
+.container .grid-layout .card .modify-form textarea::placeholder {
+    color: black;
+}
+
+.container .grid-layout .card .modify-form input::placeholder {
+    color: black;
+}
+
+.container .grid-layout .card .delete-form {
+    padding: 10px;
+    text-align: center;
+}
+
+.container .grid-layout .card form button {
+    box-shadow: 0px 3px 5px rgba(200, 200, 200, 0.9);
+}
